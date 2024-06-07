@@ -1,24 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
+import { TodoContext } from "../App";
+
+type TodoContextType = {
+  toggleCompleted: (id: number) => void;
+  deleteTodo: (id: number) => void;
+};
 
 type Props = {
   id: number;
   title: string;
   completed: boolean;
-  changeChecklist: (id: number) => void;
-  deleteTodo: (id: number) => void;
 };
 
 export default function TodoItem({
   title,
   completed,
-  changeChecklist,
-  deleteTodo,
   id,
 }: Props): React.ReactElement {
+  const { toggleCompleted, deleteTodo } =
+    useContext<TodoContextType>(TodoContext);
+
   return (
     <div className="flex justify-between">
       <input
-        onChange={() => changeChecklist(id)}
+        onChange={() => toggleCompleted(id)}
         type="checkbox"
         defaultChecked={completed}
         className="checkbox"
